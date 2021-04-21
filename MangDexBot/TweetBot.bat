@@ -1,0 +1,1 @@
+"C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.7_3.7.2544.0_x64__qbz5n2kfra8p0\python.exe" C:\Users\Goose\Documents\PythonScripts\TweetBot\main.py
