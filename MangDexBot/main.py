@@ -15,7 +15,7 @@ logging.basicConfig(level = logging.INFO, filename = "output.log")
 
 user = "IsMangaDexKill"
 url = "https://mangadex.org/index.html"
-check_text = "MangaDex -See you soon!" 
+check_text = "MangaDex - See you soon!" 
 today = datetime.datetime.today()
 isLive = eval(open("isLive.txt",'r').read())
 post_time = datetime.time(12)
@@ -48,12 +48,14 @@ def main():
 
     if(updated):
         #post up tweet
-        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet")
-        #api.update_status("The MangaDex website has updated!")
+        api.update_status("The MangaDex website has updated!")
+        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet: The MangaDex website has updated!")
     elif(today.time() > post_time and api.user_timeline(user)[0].created_at.date() != date.today()):
         #post down tweet
-        #api.update_status("Today is: " + today.strftime("%d/%m/%Y") + ", and MangaDex is still down :(")
-        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet")
+        api.update_status("Today is: " + today.strftime("%d/%m/%Y") + ", and MangaDex is still down :(")
+        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet: Today is: " + today.strftime("%d/%m/%Y") + ", and MangaDex is still down :(")
+    else:
+        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Did not post tweet")
     
     logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Program Run Successfully")
 
