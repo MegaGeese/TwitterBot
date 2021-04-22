@@ -15,7 +15,7 @@ logging.basicConfig(level = logging.INFO, filename = "output.log")
 
 user = "IsMangaDexKill"
 url = "https://mangadex.org/index.html"
-check_text = "Three days ago (2021-03-17), we correctly identified and reported that a malicious actor had managed to gain access to an admin account through the reuse of a session token found in an old database leak through faulty configuration of session management. Following that event, we moved to identify the vulnerable section of code and worked to patch it up, also clearing session data globally to thwart further attempts at exploitation through the same method." 
+check_text = "MangaDex -See you soon!" 
 today = datetime.datetime.today()
 isLive = eval(open("isLive.txt",'r').read())
 post_time = datetime.time(12)
@@ -40,22 +40,22 @@ def checkSite():
 
     if(http_resolved):
         soup = BeautifulSoup(response.text, "html.parser")
-        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Program Run Successfully")
-        if check_text not in soup.get_text(): #If true website should be live. Update isLive.txt so that the program doesn't keep runnning unnessisarily
-            open("isLive.txt", 'w').write("True")
-            updated = True
-            return("The MangaDex website has updated!")
-    return("Today is: " + today.strftime("%d/%m/%Y") + ", and MangaDex is still down :(")
+        return(check_text not in soup.title.string) #If true website should be live. Update isLive.txt so that the program doesn't keep runnning unnessisarily
 
 def main():
-    output = checkSite()
+    updated = checkSite()
+    open("isLive.txt", 'w').write(str(updated))
 
-    if(not isLive and (today.time() > post_time or updated)):
+    if(updated):
+        #post up tweet
+        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet")
+        #api.update_status("The MangaDex website has updated!")
+    elif(today.time() > post_time and api.user_timeline(user)[0].created_at.date() != date.today()):
+        #post down tweet
+        #api.update_status("Today is: " + today.strftime("%d/%m/%Y") + ", and MangaDex is still down :(")
+        logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet")
+    
+    logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Program Run Successfully")
 
-        if(api.user_timeline(user)[0].created_at.date() != date.today()):
-            logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Posted Tweet")
-            #api.update_status(output)
-        else:
-            logging.info(today.strftime("%d/%m/%Y %H:%M:%S") + ": Did not post Tweet")
-
-main()
+if(not isLive):
+    main()
