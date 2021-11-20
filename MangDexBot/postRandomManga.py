@@ -1,6 +1,7 @@
 import tweepy
 import requests
 import datetime
+import json
 from datetime import date
 from datetime import time
 import logging
@@ -13,7 +14,7 @@ user = "IsMangaDexKill"
 url = "https://api.mangadex.org/"
 today = datetime.datetime.today()
 post_time = datetime.time(12)
-with open("./keys.json") as f:
+with open("../../keys/IsMangadexKillsKeys.json") as f:
     data = json.load(f)
 
 auth = tweepy.OAuthHandler(data["APIKey"], data["APIKeySecret"])

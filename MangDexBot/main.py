@@ -21,7 +21,7 @@ today = datetime.datetime.today()
 isLive = eval(open("isLive.txt",'r').read())
 post_time = datetime.time(12)
 updated = False
-with open("./keys.json") as f:
+with open("../../keys/IsMangadexKillsKeys.json") as f:
     data = json.load(f)
 
 auth = tweepy.OAuthHandler(data["APIKey"], data["APIKeySecret"])
