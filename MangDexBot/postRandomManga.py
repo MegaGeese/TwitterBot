@@ -13,12 +13,12 @@ user = "IsMangaDexKill"
 url = "https://api.mangadex.org/"
 today = datetime.datetime.today()
 post_time = datetime.time(12)
+with open("./keys.json") as f:
+    data = json.load(f)
 
-auth = tweepy.OAuthHandler("hULcG0lsEwyeN5ho6IejRzG0R", 
-    "fDe7BmJ3HKNK2AtAcJMhry8eCIflzumwF663cNBG3oITFSY69Q")
+auth = tweepy.OAuthHandler(data["APIKey"], data["APIKeySecret"])
 
-auth.set_access_token("1384340442146172929-8vgMdaClUdTlkEfUEMjAWHRt13RrOB", 
-    "lLf8MYbb854hFA9KPRtuvGs2ynFSJ5Dl81mN4KNQg27uS")
+auth.set_access_token(data["AccessToken"], data["AccessTokenSecret"])
 
 twitter = tweepy.API(auth)
 
